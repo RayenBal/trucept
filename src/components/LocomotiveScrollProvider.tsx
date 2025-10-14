@@ -6,7 +6,8 @@ import 'locomotive-scroll/dist/locomotive-scroll.css';
 
 export default function LocomotiveScrollProvider({ children }: { children: React.ReactNode }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const locomotiveScrollRef = useRef<LocomotiveScroll | null>(null);
+// @ts-ignore - disable type checking for LocomotiveScroll
+const locomotiveScrollRef = useRef<any>(null);
 
   useEffect(() => {
     if (scrollRef.current) {
