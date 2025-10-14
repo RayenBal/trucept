@@ -274,15 +274,18 @@ export default function HomePage() {
           transition={{ duration: 1, delay: 2.5 }}
           className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
         >
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center cursor-pointer group"
-            onClick={() => {
-              const nextSection = document.getElementById('capabilities');
-              nextSection?.scrollIntoView({ behavior: 'smooth' });
-            }}
-          >
+         <motion.div
+  animate={{ y: [0, 8, 0] }}
+  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+  className="flex flex-col items-center cursor-pointer group"
+  onClick={() => {
+    // ✅ only run this in the browser
+    if (typeof document !== "undefined") {
+      const nextSection = document.getElementById("capabilities");
+      nextSection?.scrollIntoView({ behavior: "smooth" });
+    }
+  }}
+>
             <span className="text-sm text-slate-500 mb-3 group-hover:text-primary transition-colors">
               Explore Our Capabilities
             </span>
