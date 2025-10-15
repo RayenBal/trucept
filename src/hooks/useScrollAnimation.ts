@@ -35,3 +35,4 @@ export function useStaggeredAnimation(delay: number = 0.1) {
 
   return { ref, isInView, delay };
 }
+

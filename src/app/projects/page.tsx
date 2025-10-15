@@ -9,11 +9,11 @@ import Layout from '@/components/Layout';
 const projects = [
   {
     title: "AI-Powered Paleoclimate Platform",
-    description: "Advanced climate modeling platform developed in collaboration with Karwisoft AI, UCL, and ADU. Features deep learning models for paleoclimate reconstruction and predictive analytics.",
+    description: "Advanced climate modeling platform developed in collaboration with UCL and ADU. Features deep learning models for paleoclimate reconstruction and predictive analytics.",
     image: "/api/placeholder/600/400",
     tags: ["AI", "Climate Science", "Deep Learning", "Research"],
     technologies: ["Python", "TensorFlow", "FastAPI", "React"],
-    partners: ["Karwisoft AI", "UCL", "ADU"],
+    partners: ["UCL", "ADU"],
     status: "Active",
     link: "#"
   },

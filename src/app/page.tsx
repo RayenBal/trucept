@@ -41,7 +41,7 @@ export default function HomePage() {
         {/* Cinematic Hero Section */}
         <section 
           ref={containerRef}
-          className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-light pattern-waves"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden gradient-light pattern-waves"
           data-scroll-section
         >
           {/* Dynamic Background Elements */}
@@ -51,7 +51,7 @@ export default function HomePage() {
               className="absolute inset-0 bg-gradient-to-br from-transparent via-blue-50/20 to-transparent"
               style={{ 
                 y,
-                x: useTransform(() => mousePosition.x * 20),
+                x: mousePosition.x * 20,
               }}
             />
             
@@ -72,8 +72,8 @@ export default function HomePage() {
                 ease: "easeInOut",
               }}
               style={{
-                x: useTransform(() => mousePosition.x * 30),
-                y: useTransform(() => mousePosition.y * 20),
+                x: mousePosition.x * 30,
+                y: mousePosition.y * 20,
               }}
             />
             
@@ -89,8 +89,8 @@ export default function HomePage() {
                 ease: "easeInOut",
               }}
               style={{
-                x: useTransform(() => mousePosition.x * -25),
-                y: useTransform(() => mousePosition.y * 15),
+                x: mousePosition.x * -25,
+                y: mousePosition.y * 15,
               }}
             />
             
@@ -106,8 +106,8 @@ export default function HomePage() {
                 ease: "linear",
               }}
               style={{
-                x: useTransform(() => mousePosition.x * 15),
-                y: useTransform(() => mousePosition.y * -10),
+                x: mousePosition.x * 15,
+                y: mousePosition.y * -10,
               }}
             />
           </div>
@@ -250,7 +250,7 @@ export default function HomePage() {
               >
                 <p className="text-sm text-slate-500 mb-12 font-medium">Trusted by industry leaders worldwide</p>
                 <div className="flex flex-wrap justify-center items-center gap-16">
-                  {['UCL', 'ADU', 'Karwisoft AI', 'Fortune 500'].map((partner, index) => (
+                  {["UCL", "ADU", "Fortune 500", "Global Research Labs"].map((partner, index) => (
                     <motion.div
                       key={partner}
                       initial={{ opacity: 0, y: 30 }}
@@ -266,7 +266,7 @@ export default function HomePage() {
               </motion.div>
             </motion.div>
           </motion.div>
-
+          
         {/* Sophisticated Scroll Indicator */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -331,7 +331,7 @@ export default function HomePage() {
               className="font-display text-5xl md:text-7xl font-bold text-slate-900 mb-8 leading-tight"
             >
               <span className="block">Engineering the</span>
-              <span className="block text-gradient-intelligence animate-gradient-shift">
+              <span className="block text-gradient-cinematic">
                 Future of AI
               </span>
             </motion.h2>
@@ -387,7 +387,7 @@ export default function HomePage() {
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="group relative"
               >
-                <div className={`relative p-8 rounded-3xl bg-gradient-to-br ${feature.bgGradient} border-2 ${feature.borderColor} shadow-soft hover:shadow-strong transition-all duration-500 hover-lift-smooth`}>
+                <div className={`relative p-8 rounded-3xl bg-gradient-to-br ${feature.bgGradient} border-2 ${feature.borderColor} shadow-soft hover:shadow-strong transition-all duration-500 hover-lift-cinematic`}>
                   <motion.div 
                     className={`w-20 h-20 bg-gradient-to-br ${feature.gradient} rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-medium`}
                     whileHover={{ scale: 1.1, rotate: 5 }}
@@ -429,13 +429,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Revolutionary Impact Section */}
-      <section className="py-32 bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-purple-500/5 to-cyan-500/5" />
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse" />
-        </div>
+      {/* Impact Section (light theme) */}
+      <section className="py-32 bg-gradient-to-b from-white via-slate-50 to-blue-50/30 relative overflow-hidden">
+        {/* Subtle Background */}
+        <div className="absolute inset-0 pattern-grid opacity-20" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -445,11 +442,11 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <h2 className="font-serif text-4xl md:text-6xl font-bold text-white mb-6">
+            <h2 className="font-display text-4xl md:text-6xl font-bold text-slate-900 mb-6">
               <span className="block">Proven Impact</span>
-              <span className="block text-3xl md:text-4xl text-gray-300 mt-2">Across Industries</span>
+              <span className="block text-3xl md:text-4xl text-slate-500 mt-2">Across Industries</span>
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
               Numbers that speak to our commitment to excellence and innovation in every project we undertake.
             </p>
           </motion.div>
@@ -460,28 +457,24 @@ export default function HomePage() {
                 number: "50+", 
                 label: "Enterprise Projects", 
                 description: "Delivered with precision",
-                icon: "🚀",
                 gradient: "from-blue-500 to-cyan-500"
               },
               { 
                 number: "15+", 
                 label: "Research Publications", 
                 description: "Advancing the field",
-                icon: "📚",
                 gradient: "from-purple-500 to-pink-500"
               },
               { 
                 number: "100%", 
                 label: "Client Satisfaction", 
                 description: "Exceeding expectations",
-                icon: "⭐",
                 gradient: "from-green-500 to-emerald-500"
               },
               { 
                 number: "24/7", 
                 label: "Global Support", 
                 description: "Always available",
-                icon: "🌍",
                 gradient: "from-orange-500 to-red-500"
               }
             ].map((stat, index) => (
@@ -494,30 +487,27 @@ export default function HomePage() {
                 whileHover={{ y: -10, scale: 1.05 }}
                 className="group relative"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500" />
-                <div className="relative p-8 rounded-3xl bg-gradient-to-br from-white/5 to-white/2 border border-white/10 backdrop-blur-sm hover:border-white/20 transition-all duration-500 text-center">
-                  <div className="text-4xl mb-4">{stat.icon}</div>
-                  
+                <div className="relative p-8 rounded-3xl bg-white border border-slate-200 backdrop-blur-sm hover:border-slate-300 transition-all duration-500 text-center shadow-soft">
                   <motion.div
                     initial={{ scale: 0 }}
                     whileInView={{ scale: 1 }}
                     transition={{ duration: 0.8, delay: index * 0.1 + 0.3, type: "spring" }}
                     viewport={{ once: true }}
-                    className={`font-serif text-5xl md:text-6xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-4`}
+                    className={`font-display text-5xl md:text-6xl font-bold bg-gradient-to-r ${stat.gradient} bg-clip-text text-transparent mb-4`}
                   >
                     {stat.number}
                   </motion.div>
                   
-                  <h3 className="font-semibold text-white text-lg mb-2">
+                  <h3 className="font-semibold text-slate-900 text-lg mb-2">
                     {stat.label}
                   </h3>
                   
-                  <p className="text-gray-400 text-sm">
+                  <p className="text-slate-500 text-sm">
                     {stat.description}
                   </p>
                   
                   {/* Animated border */}
-                  <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${stat.gradient} opacity-0 group-hover:opacity-20 transition-opacity duration-500`} />
+                  <div className={`absolute inset-0 rounded-3xl bg-gradient-to-r ${stat.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
                 </div>
               </motion.div>
             ))}
@@ -535,7 +525,7 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="space-y-8"
           >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-primary-foreground">
+            <h2 className="font-display text-4xl md:text-5xl font-bold text-primary-foreground">
               Ready to Transform Your Business?
             </h2>
             <p className="text-xl text-primary-foreground/90 max-w-2xl mx-auto">

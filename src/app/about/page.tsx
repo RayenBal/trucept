@@ -83,7 +83,7 @@ export default function AboutPage() {
                 <p>
                   Under his leadership, Trucept has delivered over 50 successful projects, published 
                   15+ research papers, and established strategic partnerships with leading institutions 
-                  including UCL, ADU, and Karwisoft AI.
+                  including UCL and ADU.
                 </p>
               </div>
               
@@ -191,13 +191,6 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                name: "Karwisoft AI",
-                location: "Canada",
-                description: "Collaborative AI research and development, focusing on climate science and environmental monitoring solutions.",
-                icon: Globe,
-                color: "text-blue-500"
-              },
-              {
                 name: "University College London (UCL)",
                 location: "United Kingdom",
                 description: "Academic research partnership in machine learning, climate modeling, and scientific computing applications.",
@@ -210,6 +203,13 @@ export default function AboutPage() {
                 description: "Joint research initiatives in AI applications for environmental science and sustainable technology development.",
                 icon: Users,
                 color: "text-green-500"
+              },
+              {
+                name: "Global Research Labs",
+                location: "Worldwide",
+                description: "Collaborative AI research and development across climate science and environmental monitoring.",
+                icon: Globe,
+                color: "text-blue-500"
               }
             ].map((partner, index) => (
               <motion.div

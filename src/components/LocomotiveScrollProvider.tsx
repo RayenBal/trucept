@@ -1,16 +1,20 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import LocomotiveScroll from 'locomotive-scroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 
 export default function LocomotiveScrollProvider({ children }: { children: React.ReactNode }) {
   const scrollRef = useRef<HTMLDivElement>(null);
-// @ts-ignore - disable type checking for LocomotiveScroll
-const locomotiveScrollRef = useRef<any>(null);
+  // @ts-ignore - disable type checking for LocomotiveScroll instance
+  const locomotiveScrollRef = useRef<any>(null);
 
   useEffect(() => {
-    if (scrollRef.current) {
+    let isMounted = true;
+
+    const setup = async () => {
+      const LocomotiveScroll = (await import('locomotive-scroll')).default;
+      if (!isMounted || !scrollRef.current) return;
+
       locomotiveScrollRef.current = new LocomotiveScroll({
         el: scrollRef.current,
         smooth: true,
@@ -20,15 +24,10 @@ const locomotiveScrollRef = useRef<any>(null);
         getDirection: true,
         getSpeed: true,
         reloadOnContextChange: true,
-        smartphone: {
-          smooth: true,
-        },
-        tablet: {
-          smooth: true,
-        },
+        smartphone: { smooth: true },
+        tablet: { smooth: true },
       });
 
-      // Update scroll on window resize
       const handleResize = () => {
         locomotiveScrollRef.current?.update();
       };
@@ -37,9 +36,16 @@ const locomotiveScrollRef = useRef<any>(null);
 
       return () => {
         window.removeEventListener('resize', handleResize);
-        locomotiveScrollRef.current?.destroy();
       };
-    }
+    };
+
+    const cleanupPromise = setup();
+
+    return () => {
+      isMounted = false;
+      void cleanupPromise;
+      locomotiveScrollRef.current?.destroy();
+    };
   }, []);
 
   return (
@@ -48,3 +54,4 @@ const locomotiveScrollRef = useRef<any>(null);
     </div>
   );
 }
+
