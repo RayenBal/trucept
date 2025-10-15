@@ -15,8 +15,9 @@ function resolveSmtpConfig() {
   const port = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : undefined;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
-  const from = process.env.SMTP_FROM || process.env.EMAIL_TO || 'contact@truceptconsulting.com';
-  const to = process.env.EMAIL_TO || 'contact@truceptconsulting.com';
+  // safer defaults: send FROM the authenticated mailbox; deliver TO configured inbox or the mailbox itself
+  const from = process.env.SMTP_FROM || user || 'contact@truceptconsulting.com';
+  const to = process.env.EMAIL_TO || user || 'contact@truceptconsulting.com';
 
   // Auto-detect common providers if host not supplied
   if (!host && user) {
@@ -51,7 +52,7 @@ async function sendWithSMTP(payload: any) {
   const { firstName, lastName, email, subject, message, company } = payload;
   const text = `New contact inquiry\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nCompany: ${company || '-'}\nSubject: ${subject}\n\nMessage:\n${message}`;
 
-  await transporter.sendMail({ from, to, subject: `[Website] ${subject || 'New Inquiry'}`, text });
+  const info = await transporter.sendMail({ from, to, subject: `[Website] ${subject || 'New Inquiry'}`, text, replyTo: email });
 
   if (email) {
     await transporter.sendMail({
@@ -62,7 +63,7 @@ async function sendWithSMTP(payload: any) {
     });
   }
 
-  return { ok: true as const };
+  return { ok: true as const, delivery: { messageId: info.messageId, accepted: info.accepted, rejected: info.rejected } };
 }
 
 async function sendWithSendGrid(payload: any) {
@@ -72,7 +73,7 @@ async function sendWithSendGrid(payload: any) {
   // @ts-ignore
   sgMail.setApiKey(key);
   const { firstName, lastName, email, subject, message, company } = payload;
-  const to = process.env.EMAIL_TO || 'contact@truceptconsulting.com';
+  const to = process.env.EMAIL_TO || process.env.SMTP_USER || 'contact@truceptconsulting.com';
   const toCompany = {
     to,
     from: to,
@@ -84,12 +85,12 @@ async function sendWithSendGrid(payload: any) {
     : null;
   try {
     // @ts-ignore
-    await sgMail.send(toCompany);
+    const resp1 = await sgMail.send(toCompany);
     if (toUser) {
       // @ts-ignore
       await sgMail.send(toUser);
     }
-    return { ok: true as const };
+    return { ok: true as const, delivery: { provider: 'sendgrid' } };
   } catch (e: any) {
     console.error('SendGrid send failed:', e?.response?.body || e?.message);
     return { ok: false as const, reason: 'provider_error' };
@@ -112,9 +113,10 @@ async function sendWithEtherealDev(payload: any) {
     to: process.env.EMAIL_TO || 'contact@truceptconsulting.com',
     subject: `[DEV] ${subject || 'New Inquiry'}`,
     text,
+    replyTo: email,
   });
   const previewUrl = nodemailer.getTestMessageUrl(info) || undefined;
-  return { ok: true as const, previewUrl };
+  return { ok: true as const, previewUrl, delivery: { messageId: info.messageId, accepted: info.accepted, rejected: info.rejected } };
 }
 
 export async function POST(req: NextRequest) {
@@ -142,14 +144,14 @@ export async function POST(req: NextRequest) {
 
     // Prefer SMTP, then SendGrid; in dev, fall back to Ethereal preview
     const smtpResult = await sendWithSMTP(body);
-    if (smtpResult.ok) return NextResponse.json({ ok: true });
+    if (smtpResult.ok) return NextResponse.json({ ok: true, ...(process.env.NODE_ENV !== 'production' ? { delivery: smtpResult.delivery } : {}) });
 
     const sgResult = await sendWithSendGrid(body);
-    if (sgResult.ok) return NextResponse.json({ ok: true });
+    if (sgResult.ok) return NextResponse.json({ ok: true, ...(process.env.NODE_ENV !== 'production' ? { delivery: sgResult.delivery } : {}) });
 
     if (process.env.NODE_ENV !== 'production') {
       const ethResult = await sendWithEtherealDev(body);
-      if (ethResult.ok) return NextResponse.json({ ok: true, previewUrl: ethResult.previewUrl });
+      if (ethResult.ok) return NextResponse.json({ ok: true, previewUrl: ethResult.previewUrl, delivery: ethResult.delivery });
     }
 
     // Build actionable error
