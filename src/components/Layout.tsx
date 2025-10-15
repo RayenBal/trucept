@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { useRef, useState } from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Mail, Phone, MapPin, ArrowUp } from 'lucide-react';
 import SmoothScrollProvider from './SmoothScrollProvider';
 import Image from 'next/image';
 
@@ -21,10 +21,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const headerRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [showTop, setShowTop] = useState(false);
   
   const headerOpacity = useTransform(scrollY, [0, 100], [0.8, 0.95]);
   const headerBlur = useTransform(scrollY, [0, 100], [8, 20]);
   const headerScale = useTransform(scrollY, [0, 100], [1, 0.98]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const onScroll = () => setShowTop(window.scrollY > 400);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <SmoothScrollProvider>
@@ -154,6 +162,27 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <main className="flex-1">
           {children}
         </main>
+
+        {/* Scroll To Top */}
+        <AnimatePresence>
+          {showTop && (
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ duration: 0.2 }}
+              aria-label="Scroll to top"
+              className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-primary text-white shadow-medium hover:bg-primary/90"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+            >
+              <ArrowUp className="w-5 h-5" />
+            </motion.button>
+          )}
+        </AnimatePresence>
 
         {/* Footer */}
         <footer className="bg-card border-t border-border">

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Mail, Phone, MapPin, Send, Clock, Globe, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Clock, Globe, CheckCircle2, AlertCircle } from 'lucide-react';
 import Layout from '@/components/Layout';
 import { useState } from 'react';
 
@@ -81,12 +81,13 @@ export default function ContactPage() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {submitted ? (
-                    <div className="flex items-center p-4 rounded-xl bg-green-50 border border-green-200 text-green-800">
+                    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center p-4 rounded-xl bg-green-50 border border-green-200 text-green-800">
                       <CheckCircle2 className="w-5 h-5 mr-2" />
                       Your message has been sent. We’ll be in touch shortly.
-                    </div>
+                    </motion.div>
                   ) : (
                     <form action={onSubmit} className="space-y-6">
+                      <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" />
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="firstName">First Name</Label>
@@ -114,7 +115,10 @@ export default function ContactPage() {
                         <Textarea id="message" name="message" placeholder="Briefly describe your needs and goals..." className="rounded-xl min-h-[120px]" required />
                       </div>
                       {error && (
-                        <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">{error}</div>
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center p-3 rounded-lg bg-red-50 border border-red-200 text-red-800 text-sm">
+                          <AlertCircle className="w-4 h-4 mr-2" />
+                          {error}
+                        </motion.div>
                       )}
                       <Button type="submit" className="w-full rounded-xl py-6 text-lg" disabled={isSubmitting}>
                         <Send className="w-5 h-5 mr-2" />

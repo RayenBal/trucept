@@ -7,7 +7,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: var(--font-roboto), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: var(--font-manrope), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -47,70 +47,44 @@
 :root {
   --radius: 0.75rem;
   --background: #FFFFFF;
-  --foreground: #1A1A1A;
+  --foreground: #0E1526; /* deep navy */
   --card: #FFFFFF;
-  --card-foreground: #1A1A1A;
+  --card-foreground: #0E1526;
   --popover: #FFFFFF;
-  --popover-foreground: #1A1A1A;
-  --primary: #0A3B91;
+  --popover-foreground: #0E1526;
+  --primary: #0C2E6B; /* navy */
   --primary-foreground: #FFFFFF;
-  --secondary: #F5F6FA;
-  --secondary-foreground: #1A1A1A;
-  --muted: #F5F6FA;
-  --muted-foreground: #64748B;
-  --accent: #1E4EB0;
-  --accent-foreground: #FFFFFF;
-  --destructive: #EF4444;
-  --border: #E0E3E8;
-  --input: #F5F6FA;
-  --ring: #0A3B91;
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --secondary: #F6F7FA; /* neutral light */
+  --secondary-foreground: #0E1526;
+  --muted: #F2F3F6;
+  --muted-foreground: #5B6B86; /* cool gray */
+  --accent: #C7A14A; /* soft gold */
+  --accent-foreground: #0E1526;
+  --destructive: #DC2626;
+  --border: #E3E6ED;
+  --input: #F6F7FA;
+  --ring: #0C2E6B;
 }
 
 .dark {
-  --background: #0A0A0A;
-  --foreground: #F8F9FA;
-  --card: #1A1A1A;
-  --card-foreground: #F8F9FA;
-  --popover: #1A1A1A;
-  --popover-foreground: #F8F9FA;
-  --primary: #0A84FF;
+  --background: #0A0F1C;
+  --foreground: #E6EAF2;
+  --card: #0F172A;
+  --card-foreground: #E6EAF2;
+  --popover: #0F172A;
+  --popover-foreground: #E6EAF2;
+  --primary: #1B3E82;
   --primary-foreground: #FFFFFF;
-  --secondary: #2A2A2A;
-  --secondary-foreground: #F8F9FA;
-  --muted: #2A2A2A;
-  --muted-foreground: #9CA3AF;
-  --accent: #0A84FF;
-  --accent-foreground: #FFFFFF;
-  --destructive: #EF4444;
-  --border: #374151;
-  --input: #1F2937;
-  --ring: #0A84FF;
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --secondary: #111827;
+  --secondary-foreground: #E6EAF2;
+  --muted: #0B1220;
+  --muted-foreground: #9AA6BF;
+  --accent: #C7A14A;
+  --accent-foreground: #0E1526;
+  --destructive: #DC2626;
+  --border: #1F2A44;
+  --input: #0F172A;
+  --ring: #1B3E82;
 }
 
 @layer base {
@@ -123,309 +97,21 @@
 }
 
 @layer utilities {
-  /* Typography */
   .font-display {
     font-family: var(--font-display);
   }
-  
-  /* Professional Gradients */
   .gradient-trucept {
-    background: linear-gradient(135deg, #0A3B91 0%, #1E4EB0 50%, #3B82F6 100%);
+    background: linear-gradient(135deg, #0C2E6B 0%, #1B3E82 50%, #3B82F6 100%);
   }
-  
   .gradient-light {
-    background: linear-gradient(135deg, #FFFFFF 0%, #F5F6FA 50%, #E0E3E8 100%);
+    background: linear-gradient(135deg, #FFFFFF 0%, #F6F7FA 50%, #E3E6ED 100%);
   }
-  
-  .text-gradient-trucept {
-    background: linear-gradient(135deg, #0A3B91 0%, #1E4EB0 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
   .text-gradient-cinematic {
-    background: linear-gradient(135deg, #0A3B91 0%, #1E4EB0 50%, #3B82F6 100%);
+    background: linear-gradient(135deg, #0C2E6B 0%, #1B3E82 50%, #C7A14A 100%);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     animation: gradientShift 4s ease infinite;
-  }
-  
-  /* Cinematic Animations */
-  .animate-fade-in-up {
-    animation: fadeInUp 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-  
-  .animate-slide-in-left {
-    animation: slideInLeft 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-  
-  .animate-slide-in-right {
-    animation: slideInRight 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-  
-  .animate-scale-in {
-    animation: scaleIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-  
-  .animate-logo-reveal {
-    animation: logoReveal 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-  
-  .animate-text-stagger {
-    animation: textStagger 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-  
-  /* Stagger Delays */
-  .stagger-1 { animation-delay: 0.1s; }
-  .stagger-2 { animation-delay: 0.2s; }
-  .stagger-3 { animation-delay: 0.3s; }
-  .stagger-4 { animation-delay: 0.4s; }
-  .stagger-5 { animation-delay: 0.5s; }
-  .stagger-6 { animation-delay: 0.6s; }
-  
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes slideInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(50px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-  
-  @keyframes scaleIn {
-    from {
-      opacity: 0;
-      transform: scale(0.8);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  
-  @keyframes logoReveal {
-    0% {
-      opacity: 0;
-      transform: scale(0.5) rotate(-10deg);
-    }
-    50% {
-      opacity: 0.8;
-      transform: scale(1.1) rotate(5deg);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1) rotate(0deg);
-    }
-  }
-  
-  @keyframes textStagger {
-    0% {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes gradientShift {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-  
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-  
-  @keyframes pulse-glow {
-    0%, 100% {
-      box-shadow: 0 0 20px rgba(10, 59, 145, 0.3);
-    }
-    50% {
-      box-shadow: 0 0 40px rgba(10, 59, 145, 0.6);
-    }
-  }
-  
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  .animate-pulse-glow {
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
-  
-  /* Professional Patterns */
-  .pattern-grid {
-    background-image: 
-      linear-gradient(rgba(10, 59, 145, 0.02) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(10, 59, 145, 0.02) 1px, transparent 1px);
-    background-size: 50px 50px;
-  }
-  
-  .pattern-dots {
-    background-image: radial-gradient(circle, rgba(10, 59, 145, 0.05) 1px, transparent 1px);
-    background-size: 25px 25px;
-  }
-  
-  .pattern-waves {
-    background-image: 
-      radial-gradient(circle at 25% 25%, rgba(10, 59, 145, 0.1) 0%, transparent 50%),
-      radial-gradient(circle at 75% 75%, rgba(30, 78, 176, 0.1) 0%, transparent 50%);
-  }
-  
-  /* 3D Card Effects */
-  .card-3d {
-    transform-style: preserve-3d;
-    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  
-  .card-3d:hover {
-    transform: perspective(1000px) rotateX(5deg) rotateY(5deg) translateY(-10px);
-    box-shadow: 
-      0 25px 50px -12px rgba(10, 59, 145, 0.25),
-      0 0 0 1px rgba(10, 59, 145, 0.1);
-  }
-  
-  .card-expand {
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  
-  .card-expand:hover {
-    transform: scale(1.02);
-    box-shadow: 0 30px 60px -12px rgba(10, 59, 145, 0.2);
-  }
-  
-  /* Professional Hover Effects */
-  .hover-lift-cinematic {
-    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  
-  .hover-lift-cinematic:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 25px 50px -12px rgba(10, 59, 145, 0.2);
-  }
-  
-  .hover-glow-trucept {
-    transition: all 0.4s ease;
-  }
-  
-  .hover-glow-trucept:hover {
-    box-shadow: 0 0 40px rgba(10, 59, 145, 0.3);
-  }
-  
-  .hover-scale-subtle {
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  }
-  
-  .hover-scale-subtle:hover {
-    transform: scale(1.05);
-  }
-  
-  /* Professional Shadows */
-  .shadow-soft {
-    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.08);
-  }
-  
-  .shadow-medium {
-    box-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.12);
-  }
-  
-  .shadow-strong {
-    box-shadow: 0 20px 60px -12px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* Glass Effects */
-  .glass-light {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-  
-  .glass-subtle {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-  }
-  
-  /* Interactive Elements */
-  .interactive-button {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .interactive-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s;
-  }
-  
-  .interactive-button:hover::before {
-    left: 100%;
-  }
-  
-  /* Scroll Animations */
-  .scroll-reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .scroll-reveal.revealed {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  
-  /* Parallax Elements */
-  .parallax-slow {
-    transform: translateZ(0);
-    will-change: transform;
-  }
-  
-  .parallax-fast {
-    transform: translateZ(0);
-    will-change: transform;
   }
 }
