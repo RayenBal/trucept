@@ -2,16 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
-import { Brain, Mail, Phone, MapPin } from 'lucide-react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import SmoothScrollProvider from './SmoothScrollProvider';
 import Image from 'next/image';
 
 const navigation = [
   { name: 'Home', href: '/' },
+  { name: 'Services', href: '/services' },
   { name: 'Expertise', href: '/expertise' },
-  { name: 'Projects', href: '/projects' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
@@ -20,6 +20,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const { scrollY } = useScroll();
+  const [mobileOpen, setMobileOpen] = useState(false);
   
   const headerOpacity = useTransform(scrollY, [0, 100], [0.8, 0.95]);
   const headerBlur = useTransform(scrollY, [0, 100], [8, 20]);
@@ -42,7 +43,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex justify-between items-center h-16">
                 {/* Professional Logo */}
-                <Link href="/" className="flex items-center space-x-3 group">
+                <Link href="/" className="flex items-center space-x-3 group" onClick={() => setMobileOpen(false)}>
                   <motion.div 
                     className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md overflow-hidden bg-white"
                     whileHover={{ scale: 1.05 }}
@@ -88,12 +89,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   ))}
                 </nav>
 
-                {/* CTA Button */}
-                <div className="hidden md:flex items-center space-x-4">
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
+                {/* CTA + Mobile Menu */}
+                <div className="flex items-center space-x-2 md:space-x-4">
+                  <motion.div className="hidden md:block" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                     <Link
                       href="/contact"
                       className="px-6 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary/90 transition-all duration-200 shadow-md hover:shadow-lg"
@@ -101,13 +99,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                       Get Started
                     </Link>
                   </motion.div>
-                </div>
-
-                {/* Mobile menu button */}
-                <div className="md:hidden">
                   <motion.button 
-                    className="text-slate-600 hover:text-primary p-2 rounded-lg hover:bg-slate-50 transition-colors"
+                    className="md:hidden text-slate-600 hover:text-primary p-2 rounded-lg hover:bg-slate-50 transition-colors"
                     whileTap={{ scale: 0.95 }}
+                    aria-label="Toggle menu"
+                    onClick={() => setMobileOpen((v) => !v)}
                   >
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -116,6 +112,41 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
             </div>
+
+            {/* Mobile Drawer */}
+            <AnimatePresence>
+              {mobileOpen && (
+                <motion.nav
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="md:hidden border-t border-slate-200/50 bg-white/95 backdrop-blur-md"
+                >
+                  <div className="max-w-7xl mx-auto px-4 py-3 space-y-1">
+                    {navigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        onClick={() => setMobileOpen(false)}
+                        className={`block px-3 py-3 rounded-lg text-sm font-medium ${
+                          pathname === item.href ? 'text-primary bg-blue-50' : 'text-slate-700 hover:text-primary hover:bg-slate-50'
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                    <Link
+                      href="/contact"
+                      onClick={() => setMobileOpen(false)}
+                      className="block mt-2 px-3 py-3 rounded-lg text-sm font-medium text-white bg-primary hover:bg-primary/90"
+                    >
+                      Get Started
+                    </Link>
+                  </div>
+                </motion.nav>
+              )}
+            </AnimatePresence>
           </div>
         </motion.header>
 
@@ -139,13 +170,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </span>
                 </div>
                 <p className="text-muted-foreground mb-4 max-w-md">
-                  Engineering Intelligence. Securing Innovation. Empowering organizations with 
-                  intelligent automation, secure infrastructures, and research-grade AI solutions.
+                  Precision consulting for the paper & packaging industry. We modernize operations with automation, cloud, and data-driven intelligence.
                 </p>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <div className="flex items-center space-x-2">
                     <MapPin className="w-4 h-4" />
-                    <span>La Marsa, Tunisia</span>
+                    <span>Canada · Tunisia · UAE</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Mail className="w-4 h-4" />
@@ -179,10 +209,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div>
                 <h3 className="font-semibold text-foreground mb-4">Services</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>Paper Industry Consulting</li>
                   <li>AI & Machine Learning</li>
                   <li>DevSecOps & Automation</li>
-                  <li>Cybersecurity Engineering</li>
-                  <li>Scientific Research</li>
+                  <li>Cloud Optimization</li>
                 </ul>
               </div>
             </div>
@@ -193,7 +223,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 © 2025 Trucept Consulting SARL – All Rights Reserved
               </p>
               <p className="text-sm text-muted-foreground mt-2 md:mt-0">
-                Founded by Mohamed Rayen Balghouthi
+                Crafted for performance and security
               </p>
             </div>
           </div>
