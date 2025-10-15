@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles, Shield, Zap, Brain, ChevronDown, Cpu, Settings, Lock } from 'lucide-react';
 import Layout from '@/components/Layout';
 import LocomotiveScrollProvider from '@/components/LocomotiveScrollProvider';
+import Image from 'next/image';
 
 export default function HomePage() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -140,9 +141,9 @@ export default function HomePage() {
                 }}
                 className="flex justify-center mb-8"
               >
-                <div className="w-24 h-24 bg-gradient-trucept rounded-2xl flex items-center justify-center shadow-strong animate-pulse-glow">
-                  <Brain className="w-12 h-12 text-white" />
-        </div>
+                <div className="w-28 h-28 rounded-2xl flex items-center justify-center shadow-strong animate-pulse-glow overflow-hidden bg-white">
+                  <Image src="/trucept_logo.png" alt="Trucept Consulting" width={96} height={96} className="object-contain" priority />
+                </div>
               </motion.div>
 
               {/* Professional Badge */}

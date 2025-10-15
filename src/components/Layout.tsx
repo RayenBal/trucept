@@ -6,6 +6,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { Brain, Mail, Phone, MapPin } from 'lucide-react';
 import SmoothScrollProvider from './SmoothScrollProvider';
+import Image from 'next/image';
 
 const navigation = [
   { name: 'Home', href: '/' },
@@ -43,11 +44,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 {/* Professional Logo */}
                 <Link href="/" className="flex items-center space-x-3 group">
                   <motion.div 
-                    className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-md"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md overflow-hidden bg-white"
                     whileHover={{ scale: 1.05 }}
                     transition={{ type: "spring", stiffness: 300 }}
                   >
-                    <Brain className="w-6 h-6 text-white" />
+                    <Image src="/trucept_logo.png" alt="Trucept Consulting" width={40} height={40} className="object-contain" priority />
                   </motion.div>
                   <div className="flex flex-col">
                     <span className="font-display text-xl font-bold text-slate-900 group-hover:text-primary transition-colors">
@@ -130,8 +131,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               {/* Company Info */}
               <div className="col-span-1 md:col-span-2">
                 <div className="flex items-center space-x-2 mb-4">
-                  <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                    <Brain className="w-5 h-5 text-primary-foreground" />
+                  <div className="w-8 h-8 rounded-lg overflow-hidden bg-white flex items-center justify-center">
+                    <Image src="/trucept_logo.png" alt="Trucept Consulting" width={32} height={32} className="object-contain" />
                   </div>
                   <span className="font-display text-xl font-semibold text-foreground">
                     Trucept Consulting SARL

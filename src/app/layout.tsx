@@ -79,6 +79,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: [
+      { url: "/trucept_logo.svg", type: "image/svg+xml" },
+      { url: "/trucept_logo.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
