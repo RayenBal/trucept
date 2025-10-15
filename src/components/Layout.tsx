@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { Mail, Phone, MapPin, ArrowUp } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUp, MessageCircle } from 'lucide-react';
 import SmoothScrollProvider from './SmoothScrollProvider';
 import Image from 'next/image';
 
@@ -15,6 +15,10 @@ const navigation = [
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },
 ];
+
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+21628221389';
+const WHATSAPP_TEXT = encodeURIComponent('Hello Trucept Consulting, I would like to discuss a project.');
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER.replace(/[^\d]/g, '')}?text=${WHATSAPP_TEXT}`;
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -163,24 +167,39 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
 
-        {/* Scroll To Top */}
+        {/* Floating Actions */}
         <AnimatePresence>
           {showTop && (
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.2 }}
-              aria-label="Scroll to top"
-              className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-primary text-white shadow-medium hover:bg-primary/90"
-              onClick={() => {
-                if (typeof window !== 'undefined') {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-              }}
-            >
-              <ArrowUp className="w-5 h-5" />
-            </motion.button>
+            <>
+              <motion.a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.2 }}
+                aria-label="Chat on WhatsApp"
+                className="fixed bottom-6 right-6 z-50 mr-16 p-3 rounded-full bg-green-500 text-white shadow-medium hover:bg-green-600"
+              >
+                <MessageCircle className="w-5 h-5" />
+              </motion.a>
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.2 }}
+                aria-label="Scroll to top"
+                className="fixed bottom-6 right-6 z-50 p-3 rounded-full bg-primary text-white shadow-medium hover:bg-primary/90"
+                onClick={() => {
+                  if (typeof window !== 'undefined') {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }
+                }}
+              >
+                <ArrowUp className="w-5 h-5" />
+              </motion.button>
+            </>
           )}
         </AnimatePresence>
 

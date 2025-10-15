@@ -6,9 +6,14 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { Mail, Phone, MapPin, Send, Clock, Globe, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Clock, Globe, CheckCircle2, AlertCircle, Calendar, MessageCircle } from 'lucide-react';
 import Layout from '@/components/Layout';
 import { useState } from 'react';
+
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '+21628221389';
+const WHATSAPP_TEXT = encodeURIComponent('Hello Trucept Consulting, I would like to schedule a consultation.');
+const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER.replace(/[^\d]/g, '')}?text=${WHATSAPP_TEXT}`;
+const CALENDLY_LINK = process.env.NEXT_PUBLIC_CALENDLY_LINK || 'https://calendly.com/';
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -81,10 +86,20 @@ export default function ContactPage() {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   {submitted ? (
-                    <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center p-4 rounded-xl bg-green-50 border border-green-200 text-green-800">
-                      <CheckCircle2 className="w-5 h-5 mr-2" />
-                      Your message has been sent. We’ll be in touch shortly.
-                    </motion.div>
+                    <>
+                      <motion.div initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center p-4 rounded-xl bg-green-50 border border-green-200 text-green-800">
+                        <CheckCircle2 className="w-5 h-5 mr-2" />
+                        Your message has been sent. We’ll be in touch shortly.
+                      </motion.div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-4 py-3 rounded-xl bg-green-500 text-white hover:bg-green-600 transition-colors">
+                          <MessageCircle className="w-5 h-5 mr-2" /> Chat on WhatsApp
+                        </a>
+                        <a href={CALENDLY_LINK} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-4 py-3 rounded-xl border border-slate-300 text-slate-700 hover:border-primary hover:text-primary transition-colors">
+                          <Calendar className="w-5 h-5 mr-2" /> Schedule a Call
+                        </a>
+                      </div>
+                    </>
                   ) : (
                     <form action={onSubmit} className="space-y-6">
                       <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" />
