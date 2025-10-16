@@ -87,9 +87,10 @@ async function sendWithSMTP(payload: any) {
   try { await transporter.verify(); } catch (e: any) { console.error('SMTP verify failed:', e?.message); return { ok: false as const, reason: 'invalid_credentials' }; }
 
   const { firstName, lastName, email, subject, message, company } = payload;
-  const text = `New contact inquiry\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nCompany: ${company || '-'}\nSubject: ${subject}\n\nMessage:\n${message}`;
+  const timestamp = new Date().toISOString();
+  const text = `New message from TruceptConsulting.com\n\nName: ${firstName} ${lastName}\nEmail: ${email}\nCompany: ${company || '-'}\nSubject: ${subject}\nTimestamp: ${timestamp}\n\nMessage:\n${message}`;
 
-  const info = await transporter.sendMail({ from, to, subject: `[Website] ${subject || 'New Inquiry'}`, text, html: companyEmailHTML(payload), replyTo: email });
+  const info = await transporter.sendMail({ from, to, subject: `New message from TruceptConsulting.com`, text, html: companyEmailHTML(payload), replyTo: email });
 
   if (email) {
     await transporter.sendMail({ from, to: email, subject: 'We received your message – Trucept Consulting', text: 'Thank you for reaching out. Our team will contact you shortly.', html: userConfirmHTML() });

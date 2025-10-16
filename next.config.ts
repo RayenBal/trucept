@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
     // ✅ allow production builds to continue even if ESLint finds warnings or errors
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    optimizePackageImports: ["framer-motion", "lucide-react"],
+  },
 };
 
 export default nextConfig;
