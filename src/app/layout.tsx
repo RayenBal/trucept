@@ -68,15 +68,16 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico?v=10", type: "image/x-icon" },
-      { url: "/favicon-16x16.png?v=10", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png?v=10", sizes: "32x32", type: "image/png" },
-      { url: "/android-chrome-192x192.png?v=10", sizes: "192x192", type: "image/png" },
-      { url: "/android-chrome-512x512.png?v=10", sizes: "512x512", type: "image/png" },
+      { url: "/favicon-trucept.ico?v=999", type: "image/x-icon" },
+      { url: "/favicon-16x16.png?v=999", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png?v=999", sizes: "32x32", type: "image/png" },
+      { url: "/android-chrome-192x192.png?v=999", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png?v=999", sizes: "512x512", type: "image/png" },
     ],
-    apple: "/apple-touch-icon.png?v=10",
+    apple: "/apple-touch-icon.png?v=999",
   },
-  manifest: "/site.webmanifest?v=10",
+  manifest: "/site.webmanifest?v=999",
+  
   
 };
 
