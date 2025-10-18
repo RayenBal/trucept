@@ -68,15 +68,15 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
-      { url: "/favicon.ico", type: "image/x-icon" },
+      { url: "/favicon-16x16.png?v=4", sizes: "16x16", type: "image/png" },
+      { url: "/favicon-32x32.png?v=4", sizes: "32x32", type: "image/png" },
+      { url: "/android-chrome-192x192.png?v=4", sizes: "192x192", type: "image/png" },
+      { url: "/android-chrome-512x512.png?v=4", sizes: "512x512", type: "image/png" },
+      { url: "/favicon.ico?v=4", type: "image/x-icon" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: "/apple-touch-icon.png?v=4",
   },
-  manifest: "/site.webmanifest",
+  manifest: "/site.webmanifest?v=4",  
 };
 
 export default function RootLayout({
