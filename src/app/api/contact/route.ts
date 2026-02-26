@@ -47,7 +47,7 @@ function companyEmailHTML(payload: any) {
           </td>
         </tr>
         <tr>
-          <td style="padding:16px 24px;border-top:1px solid #e3e6ed;color:#5B6B86;font-size:12px;">Trucept Consulting • Canada · Tunisia · UAE</td>
+          <td style="padding:16px 24px;border-top:1px solid #e3e6ed;color:#5B6B86;font-size:12px;">Trucept Consulting • Tunisia · UAE</td>
         </tr>
       </table>
     </td></tr>
@@ -69,7 +69,7 @@ function userConfirmHTML() {
           </td>
         </tr>
         <tr>
-          <td style="padding:16px 24px;border-top:1px solid #e3e6ed;color:#5B6B86;font-size:12px;">Trucept Consulting • Canada · Tunisia · UAE</td>
+          <td style="padding:16px 24px;border-top:1px solid #e3e6ed;color:#5B6B86;font-size:12px;">Trucept Consulting • Tunisia · UAE</td>
         </tr>
       </table>
     </td></tr>
