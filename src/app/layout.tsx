@@ -87,6 +87,42 @@ export default function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){document.documentElement.classList.add('dark')}})()`,
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Trucept Consulting',
+              url: 'https://www.truceptconsulting.com',
+              logo: 'https://www.truceptconsulting.com/android-chrome-512x512.png',
+              description:
+                'AI systems architecture and software engineering consultancy. We build intelligent infrastructure, automation platforms, and data-driven systems for enterprises.',
+              foundingDate: '2023',
+              founder: {
+                '@type': 'Person',
+                name: 'Mohamed Rayen Balghouthi',
+              },
+              contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: '+216-28-221-389',
+                contactType: 'customer service',
+                email: 'contact@truceptconsulting.com',
+                availableLanguage: ['English', 'French', 'Arabic'],
+              },
+              sameAs: [],
+              areaServed: 'Worldwide',
+              knowsAbout: [
+                'Artificial Intelligence',
+                'Machine Learning',
+                'Software Engineering',
+                'Cloud Architecture',
+                'Data Engineering',
+                'DevSecOps',
+              ],
+            }),
+          }}
+        />
       </head>
       <body className="antialiased">
         <PageTransitionProvider>
