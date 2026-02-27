@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import PageTransitionProvider from "./providers/PageTransitionProvider";
 
@@ -9,26 +9,19 @@ const inter = Inter({
   display: "swap",
 });
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-playfair",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: {
-    default: "Trucept Consulting – Paper & Packaging Consulting",
+    default: "Trucept Consulting – AI Systems & Software Engineering",
     template: "%s | Trucept Consulting",
   },
   description:
-    "Trucept Consulting provides Paper and Packaging Consulting, Automation, and AI Solutions for industrial efficiency and sustainability.",
+    "Trucept Consulting is an advanced AI systems architecture and software engineering consultancy. We build intelligent infrastructure, automation platforms, and data-driven systems for enterprises.",
   keywords: [
-    "Paper Consulting",
-    "Packaging Consulting",
+    "AI Consulting",
+    "Software Engineering",
+    "Systems Architecture",
+    "Machine Learning",
     "Automation",
-    "AI Solutions",
-    "Industrial Consulting",
     "Trucept Consulting",
   ],
   authors: [{ name: "Mohamed Rayen Balghouthi" }],
@@ -41,9 +34,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://www.truceptconsulting.com/",
-    title: "Trucept Consulting – Paper & Packaging Consulting",
+    title: "Trucept Consulting – AI Systems & Software Engineering",
     description:
-      "Experts in Paper & Packaging Consulting, Automation, and AI Solutions.",
+      "Advanced AI systems architecture and software engineering consultancy.",
     siteName: "Trucept Consulting",
     images: [
       { url: "/og-cover.jpg", width: 1200, height: 630, alt: "Trucept Consulting" },
@@ -51,8 +44,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Trucept Consulting – Paper & Packaging Consulting",
-    description: "Experts in Paper & Packaging Consulting, Automation, and AI Solutions.",
+    title: "Trucept Consulting – AI Systems & Software Engineering",
+    description: "Advanced AI systems architecture and software engineering consultancy.",
     images: ["/og-cover.jpg"],
   },
   robots: {
@@ -87,7 +80,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.remove('dark')}else{document.documentElement.classList.add('dark')}}catch(e){document.documentElement.classList.add('dark')}})()`,
+          }}
+        />
+      </head>
       <body className="antialiased">
         <PageTransitionProvider>
           {children}

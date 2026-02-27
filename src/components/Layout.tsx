@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { Mail, Phone, MapPin, ArrowUp, MessageCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUp, MessageCircle, Sun, Moon } from 'lucide-react';
 import Image from 'next/image';
 
 const navigation = [
@@ -24,9 +24,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [showTop, setShowTop] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    setIsDark(document.documentElement.classList.contains('dark'));
     const onScroll = () => {
       setScrolled(window.scrollY > 20);
       setShowTop(window.scrollY > 400);
@@ -35,14 +37,21 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const toggleTheme = () => {
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.classList.toggle('dark', next);
+    localStorage.setItem('theme', next ? 'dark' : 'light');
+  };
+
   return (
-    <div className="min-h-screen bg-white">
-      {/* Dark Glass Navbar */}
+    <div className="min-h-screen bg-white dark:bg-[#0a0a0f]">
+      {/* Navbar */}
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-2xl'
-            : 'bg-slate-900/90 backdrop-blur-md border-b border-slate-800/50'
+            ? 'bg-white/90 dark:bg-slate-900/95 backdrop-blur-xl border-b border-slate-200 dark:border-slate-700/50 shadow-lg dark:shadow-2xl'
+            : 'bg-white/80 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800/50'
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,7 +62,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               className="flex items-center space-x-3 group"
               onClick={() => setMobileOpen(false)}
             >
-              <div className="w-9 h-9 rounded-lg overflow-hidden bg-white/10 flex items-center justify-center ring-1 ring-white/20">
+              <div className="w-9 h-9 rounded-lg overflow-hidden bg-slate-100 dark:bg-white/10 flex items-center justify-center ring-1 ring-slate-200 dark:ring-white/20">
                 <Image
                   src="/trucept_logo.png"
                   alt="Trucept Consulting"
@@ -64,10 +73,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 />
               </div>
               <div className="flex flex-col leading-none">
-                <span className="font-bold text-white text-base tracking-tight group-hover:text-blue-400 transition-colors">
+                <span className="font-bold text-slate-900 dark:text-white text-base tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                   Trucept Consulting
                 </span>
-                <span className="text-[10px] text-slate-400 tracking-widest uppercase">SARL</span>
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 tracking-widest uppercase">SARL</span>
               </div>
             </Link>
 
@@ -79,15 +88,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   href={item.href}
                   className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                     pathname === item.href
-                      ? 'text-white bg-blue-600/20 border border-blue-500/30'
-                      : 'text-slate-300 hover:text-white hover:bg-white/10'
+                      ? 'text-blue-700 dark:text-white bg-blue-50 dark:bg-blue-600/20 border border-blue-200 dark:border-blue-500/30'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10'
                   }`}
                 >
                   {item.name}
                   {pathname === item.href && (
                     <motion.div
                       layoutId="activeNavItem"
-                      className="absolute inset-0 bg-blue-600/20 border border-blue-500/30 rounded-lg -z-10"
+                      className="absolute inset-0 bg-blue-50 dark:bg-blue-600/20 border border-blue-200 dark:border-blue-500/30 rounded-lg -z-10"
                       initial={false}
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
@@ -96,8 +105,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               ))}
             </nav>
 
-            {/* CTA + Mobile Toggle */}
-            <div className="flex items-center space-x-3">
+            {/* Theme Toggle + CTA + Mobile Toggle */}
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
+                aria-label="Toggle theme"
+              >
+                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
               <Link
                 href="/contact"
                 className="hidden md:inline-flex items-center px-5 py-2 text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition-colors duration-200 shadow-lg shadow-blue-600/25"
@@ -105,7 +121,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 Get in Touch
               </Link>
               <button
-                className="md:hidden text-slate-300 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+                className="md:hidden text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 transition-colors"
                 aria-label="Toggle menu"
                 onClick={() => setMobileOpen((v) => !v)}
               >
@@ -129,7 +145,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden border-t border-slate-700/50 bg-slate-900/98 backdrop-blur-xl overflow-hidden"
+              className="md:hidden border-t border-slate-200 dark:border-slate-700/50 bg-white/98 dark:bg-slate-900/98 backdrop-blur-xl overflow-hidden"
             >
               <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
                 {navigation.map((item) => (
@@ -139,8 +155,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     onClick={() => setMobileOpen(false)}
                     className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                       pathname === item.href
-                        ? 'text-white bg-blue-600/20 border border-blue-500/30'
-                        : 'text-slate-300 hover:text-white hover:bg-white/10'
+                        ? 'text-blue-700 dark:text-white bg-blue-50 dark:bg-blue-600/20 border border-blue-200 dark:border-blue-500/30'
+                        : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/10'
                     }`}
                   >
                     {item.name}
@@ -192,14 +208,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         )}
       </AnimatePresence>
 
-      {/* Dark Footer */}
-      <footer className="bg-slate-950 text-slate-400 border-t border-slate-800">
+      {/* Footer */}
+      <footer className="bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             {/* Logo + Tagline */}
             <div className="md:col-span-1">
               <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 rounded-lg overflow-hidden bg-white/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg overflow-hidden bg-slate-100 dark:bg-white/10 flex items-center justify-center">
                   <Image
                     src="/trucept_logo.png"
                     alt="Trucept Consulting"
@@ -208,23 +224,23 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                     className="object-contain"
                   />
                 </div>
-                <span className="font-bold text-white text-base">Trucept Consulting</span>
+                <span className="font-bold text-slate-900 dark:text-white text-base">Trucept Consulting</span>
               </div>
-              <p className="text-sm text-slate-400 leading-relaxed mb-5">
-                Precision consulting for the paper &amp; packaging industry. We modernize operations with
-                automation, cloud, and data-driven intelligence.
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-5">
+                Advanced AI systems architecture &amp; software engineering consultancy. We build intelligent
+                infrastructure, automation platforms, and data-driven systems.
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex items-center space-x-2">
-                  <MapPin className="w-4 h-4 text-blue-500 shrink-0" />
+                  <MapPin className="w-4 h-4 text-blue-600 dark:text-blue-500 shrink-0" />
                   <span>Tunisia · UAE</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Mail className="w-4 h-4 text-blue-500 shrink-0" />
+                  <Mail className="w-4 h-4 text-blue-600 dark:text-blue-500 shrink-0" />
                   <span>contact@truceptconsulting.com</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Phone className="w-4 h-4 text-blue-500 shrink-0" />
+                  <Phone className="w-4 h-4 text-blue-600 dark:text-blue-500 shrink-0" />
                   <span>+216 28 221 389</span>
                 </div>
               </div>
@@ -232,13 +248,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {/* Quick Links */}
             <div>
-              <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">Quick Links</h3>
+              <h3 className="text-slate-900 dark:text-white font-semibold text-sm uppercase tracking-wider mb-5">Quick Links</h3>
               <ul className="space-y-3">
                 {navigation.map((item) => (
                   <li key={item.name}>
                     <Link
                       href={item.href}
-                      className="text-sm text-slate-400 hover:text-white transition-colors duration-200"
+                      className="text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200"
                     >
                       {item.name}
                     </Link>
@@ -249,16 +265,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {/* Services */}
             <div>
-              <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">Services</h3>
+              <h3 className="text-slate-900 dark:text-white font-semibold text-sm uppercase tracking-wider mb-5">Services</h3>
               <ul className="space-y-3 text-sm">
                 {[
-                  'Paper Industry Consulting',
-                  'AI & Automation',
-                  'Cloud & DevSecOps',
-                  'Security & Compliance',
+                  'AI & ML Systems',
+                  'Software Engineering',
+                  'Systems Architecture',
+                  'Data Engineering',
                 ].map((s) => (
                   <li key={s}>
-                    <Link href="/services" className="hover:text-white transition-colors duration-200">
+                    <Link href="/services" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors duration-200">
                       {s}
                     </Link>
                   </li>
@@ -268,8 +284,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             {/* Contact */}
             <div>
-              <h3 className="text-white font-semibold text-sm uppercase tracking-wider mb-5">Contact</h3>
-              <div className="space-y-3 text-sm">
+              <h3 className="text-slate-900 dark:text-white font-semibold text-sm uppercase tracking-wider mb-5">Contact</h3>
+              <div className="space-y-3 text-sm text-slate-500 dark:text-slate-400">
                 <p>Mon–Fri: 9:00–18:00 CET</p>
                 <p>contact@truceptconsulting.com</p>
                 <p>+216 28 221 389</p>
@@ -284,8 +300,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-slate-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-sm text-slate-500">
-            <p>© {new Date().getFullYear()} Trucept Consulting SARL — All Rights Reserved</p>
+          <div className="border-t border-slate-200 dark:border-slate-800 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-3 text-sm text-slate-400 dark:text-slate-500">
+            <p>&copy; {new Date().getFullYear()} Trucept Consulting SARL — All Rights Reserved</p>
             <p>Crafted for performance and security</p>
           </div>
         </div>

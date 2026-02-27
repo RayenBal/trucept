@@ -1,239 +1,263 @@
 'use client';
 
+import Layout from '@/components/Layout';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import {
-  Factory, Bot, CloudCog,
-  BarChart2, Cpu, Shield,
-  Workflow, Server, Lock,
-  ArrowRight, CheckCircle2,
+  Brain,
+  Code2,
+  Cpu,
+  Database,
+  Workflow,
+  Shield,
+  ArrowRight,
+  CheckCircle2,
 } from 'lucide-react';
-import Layout from '@/components/Layout';
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 28 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.65, delay, ease: 'easeOut' as const },
-});
+function FadeIn({
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.7, delay, ease: 'easeOut' as const }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 const services = [
   {
-    icon: Factory,
-    category: 'Paper Industry Consulting',
-    tagline: 'Operational excellence for modern mills and converters.',
-    bullets: [
-      'End-to-end operational diagnostics & benchmarking',
-      'Lean transformation & OEE uplift programmes',
-      'Digitised SOPs, training, and knowledge capture',
+    icon: Brain,
+    title: 'AI & Machine Learning Systems',
+    description:
+      'We design, train, and deploy production ML models — from NLP and computer vision to recommendation engines and anomaly detection.',
+    capabilities: [
+      'Custom model development & fine-tuning',
+      'NLP pipelines & document intelligence',
+      'Predictive analytics & forecasting',
+      'MLOps & model monitoring',
+      'RAG systems & LLM integration',
     ],
-    extras: [BarChart2, Workflow],
-    color: 'text-blue-600',
-    bg: 'bg-blue-50',
-    border: 'hover:border-blue-300',
-    shadow: 'hover:shadow-blue-100',
+    gradient: 'from-blue-500 to-cyan-400',
+    border: 'border-blue-200 dark:border-blue-500/20',
   },
   {
-    icon: Bot,
-    category: 'AI & Automation',
-    tagline: 'Intelligent systems from prototype to production.',
-    bullets: [
-      'Computer-vision quality control on the production line',
-      'Predictive maintenance & asset reliability models',
-      'Demand/supply forecasting and MLOps enablement',
+    icon: Code2,
+    title: 'Custom Software Engineering',
+    description:
+      'Full-stack development of enterprise platforms, SaaS products, and internal tools using modern frameworks and best practices.',
+    capabilities: [
+      'Full-stack web & mobile development',
+      'API design & microservices',
+      'Real-time systems & WebSocket',
+      'Performance optimization',
+      'Code review & technical audits',
     ],
-    extras: [Cpu],
-    color: 'text-indigo-600',
-    bg: 'bg-indigo-50',
-    border: 'hover:border-indigo-300',
-    shadow: 'hover:shadow-indigo-100',
+    gradient: 'from-indigo-500 to-purple-400',
+    border: 'border-indigo-200 dark:border-indigo-500/20',
   },
   {
-    icon: CloudCog,
-    category: 'Cloud & DevSecOps',
-    tagline: 'Resilient, secure delivery at enterprise scale.',
-    bullets: [
-      'Secure CI/CD pipelines and Kubernetes orchestration',
-      'Infrastructure as Code and cloud cost optimisation',
-      'Policy as Code, SAST/DAST, and compliance automation',
+    icon: Cpu,
+    title: 'Systems Architecture',
+    description:
+      'Distributed system design, cloud-native architecture, and scalability planning for high-throughput production environments.',
+    capabilities: [
+      'Distributed systems design',
+      'Cloud-native architecture',
+      'Event-driven & streaming systems',
+      'High-availability design',
+      'Architecture reviews & migration plans',
     ],
-    extras: [Server, Lock],
-    color: 'text-violet-600',
-    bg: 'bg-violet-50',
-    border: 'hover:border-violet-300',
-    shadow: 'hover:shadow-violet-100',
+    gradient: 'from-purple-500 to-pink-400',
+    border: 'border-purple-200 dark:border-purple-500/20',
   },
   {
-    icon: Shield,
-    category: 'Security & Compliance',
-    tagline: 'Industrial-grade security, built in — not bolted on.',
-    bullets: [
-      'ISO 27001 alignment and compliance gap analysis',
-      'OT/IT network segmentation and identity controls',
-      'Incident response planning and security automation',
+    icon: Database,
+    title: 'Data Engineering',
+    description:
+      'End-to-end data infrastructure — from ingestion pipelines and transformation to warehousing and real-time analytics.',
+    capabilities: [
+      'ETL/ELT pipeline development',
+      'Data warehouse architecture',
+      'Real-time streaming (Kafka, Flink)',
+      'Data lake design & governance',
+      'Analytics & BI integration',
     ],
-    extras: [Lock],
-    color: 'text-emerald-600',
-    bg: 'bg-emerald-50',
-    border: 'hover:border-emerald-300',
-    shadow: 'hover:shadow-emerald-100',
-  },
-  {
-    icon: Server,
-    category: 'Cloud Optimisation',
-    tagline: 'Cost-aware architectures and reliable observability.',
-    bullets: [
-      'Cloud cost audit, FinOps, and right-sizing',
-      'SRE, observability stack, and SLA governance',
-      'Zero-downtime migrations and serverless patterns',
-    ],
-    extras: [BarChart2],
-    color: 'text-sky-600',
-    bg: 'bg-sky-50',
-    border: 'hover:border-sky-300',
-    shadow: 'hover:shadow-sky-100',
+    gradient: 'from-emerald-500 to-teal-400',
+    border: 'border-emerald-200 dark:border-emerald-500/20',
   },
   {
     icon: Workflow,
-    category: 'Process Intelligence',
-    tagline: 'Data-driven insights that unlock hidden efficiency.',
-    bullets: [
-      'Real-time OEE dashboards and KPI telemetry',
-      'Waste, energy, and throughput analytics',
-      'Digital twin proof-of-concepts for major assets',
+    title: 'Process Automation',
+    description:
+      'Intelligent workflow automation, RPA, and business process optimization that eliminates manual operations at scale.',
+    capabilities: [
+      'Workflow orchestration platforms',
+      'RPA design & deployment',
+      'Document processing automation',
+      'Integration middleware',
+      'Process mining & optimization',
     ],
-    extras: [Cpu, BarChart2],
-    color: 'text-orange-600',
-    bg: 'bg-orange-50',
-    border: 'hover:border-orange-300',
-    shadow: 'hover:shadow-orange-100',
+    gradient: 'from-orange-500 to-amber-400',
+    border: 'border-orange-200 dark:border-orange-500/20',
   },
+  {
+    icon: Shield,
+    title: 'Security & DevOps',
+    description:
+      'Zero-trust security architecture, CI/CD pipeline engineering, and infrastructure as code for compliant, automated deployments.',
+    capabilities: [
+      'CI/CD pipeline engineering',
+      'Infrastructure as Code (Terraform, Pulumi)',
+      'Container orchestration (K8s)',
+      'Security auditing & pen testing',
+      'Compliance & governance automation',
+    ],
+    gradient: 'from-red-500 to-rose-400',
+    border: 'border-red-200 dark:border-red-500/20',
+  },
+];
+
+const techStack = [
+  { category: 'Languages', items: ['Python', 'TypeScript', 'Go', 'Rust', 'Java'] },
+  { category: 'AI / ML', items: ['PyTorch', 'TensorFlow', 'Hugging Face', 'LangChain', 'scikit-learn'] },
+  { category: 'Cloud', items: ['AWS', 'GCP', 'Azure', 'Vercel', 'DigitalOcean'] },
+  { category: 'Data', items: ['PostgreSQL', 'Redis', 'Kafka', 'Elasticsearch', 'MongoDB'] },
+  { category: 'DevOps', items: ['Docker', 'Kubernetes', 'Terraform', 'GitHub Actions', 'ArgoCD'] },
+  { category: 'Frontend', items: ['React', 'Next.js', 'Vue', 'Tailwind CSS', 'Three.js'] },
 ];
 
 export default function ServicesPage() {
   return (
     <Layout>
-      {/* Hero */}
-      <section className="relative py-28 bg-slate-950 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-32 -left-32 w-[500px] h-[500px] bg-blue-600/15 rounded-full blur-[100px]" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-[80px]" />
-          <div className="absolute inset-0 opacity-[0.05]"
-            style={{ backgroundImage: 'radial-gradient(circle, #94a3b8 1px, transparent 1px)', backgroundSize: '28px 28px' }} />
+      {/* ======== HERO ======== */}
+      <section className="relative py-28 sm:py-36 overflow-hidden">
+        <div className="absolute inset-0 bg-white dark:bg-[#0a0a0f]" />
+        <div className="absolute inset-0">
+          <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-blue-400/8 dark:bg-blue-600/6 rounded-full blur-[120px]" />
+          <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-purple-400/6 dark:bg-purple-600/5 rounded-full blur-[100px]" />
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div {...fadeUp(0)} className="space-y-6">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase text-blue-400 border border-blue-500/30 bg-blue-500/10">
-              What We Offer
-            </span>
-            <h1 className="text-5xl md:text-6xl font-bold text-white tracking-tight leading-[1.05]">
-              Services
+
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' as const }}
+          >
+            <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 tracking-widest uppercase mb-4">Our Services</p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 dark:text-white tracking-tight mb-6">
+              Engineering Services
+              <br />
+              <span className="text-gradient-hero">End to End</span>
             </h1>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-              Premium consulting for paper &amp; packaging. Practical programmes, measurable outcomes.
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
+              From AI research and model deployment to cloud infrastructure and security —
+              we deliver comprehensive engineering solutions.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Service Cards Grid */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div {...fadeUp()} className="text-center mb-16">
-            <p className="text-xs font-semibold tracking-widest uppercase text-blue-600 mb-3">Service Portfolio</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">
-              Our Capabilities
-            </h2>
-            <p className="mt-4 text-slate-500 max-w-2xl mx-auto text-lg">
-              Six practice areas, all focused on delivering real operational advantage.
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {services.map((s, i) => (
-              <motion.div
-                key={s.category}
-                {...fadeUp(i * 0.07)}
-                className={`group relative p-8 rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1.5 ${s.border} ${s.shadow}`}
-              >
-                {/* Icon */}
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-5 ${s.bg} group-hover:scale-105 transition-transform`}>
-                  <s.icon className={`w-6 h-6 ${s.color}`} />
+      {/* ======== SERVICE CARDS ======== */}
+      <section className="py-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-white via-slate-50/80 to-white dark:from-[#0a0a0f] dark:via-[#0d0d15] dark:to-[#0a0a0f]" />
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-8">
+            {services.map((service, i) => (
+              <FadeIn key={service.title} delay={i * 0.08}>
+                <div className={`p-8 md:p-10 rounded-2xl border ${service.border} bg-white dark:bg-slate-900/20 hover:bg-slate-50 dark:hover:bg-slate-800/20 transition-colors duration-500`}>
+                  <div className="flex flex-col md:flex-row md:items-start gap-8">
+                    <div className="md:w-1/3">
+                      <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center mb-4 shadow-lg`}>
+                        <service.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3">{service.title}</h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{service.description}</p>
+                    </div>
+                    <div className="md:w-2/3">
+                      <p className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-4">Capabilities</p>
+                      <div className="grid sm:grid-cols-2 gap-3">
+                        {service.capabilities.map((cap) => (
+                          <div key={cap} className="flex items-start gap-3">
+                            <CheckCircle2 className="w-4 h-4 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
+                            <span className="text-sm text-slate-700 dark:text-slate-300">{cap}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-                {/* Title */}
-                <h3 className="text-lg font-bold text-slate-900 mb-1.5">{s.category}</h3>
-                <p className={`text-xs font-semibold mb-4 ${s.color}`}>{s.tagline}</p>
-
-                {/* Bullets */}
-                <ul className="space-y-2.5">
-                  {s.bullets.map((b) => (
-                    <li key={b} className="flex items-start gap-2.5 text-sm text-slate-500 leading-relaxed">
-                      <CheckCircle2 className={`w-4 h-4 shrink-0 mt-0.5 ${s.color}`} />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Process */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div {...fadeUp()} className="text-center mb-16">
-            <p className="text-xs font-semibold tracking-widest uppercase text-blue-600 mb-3">How We Work</p>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">Our Engagement Model</h2>
-          </motion.div>
+      {/* ======== TECH STACK ======== */}
+      <section className="py-24 relative">
+        <div className="absolute inset-0 bg-white dark:bg-[#0a0a0f]" />
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn className="text-center mb-16">
+            <p className="text-sm font-semibold text-blue-600 dark:text-blue-400 tracking-widest uppercase mb-4">Technology</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white">
+              Our Engineering Stack
+            </h2>
+          </FadeIn>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[
-              { step: '01', title: 'Discovery', desc: 'Rapid diagnostic to map current state, pain points, and highest-impact opportunities.' },
-              { step: '02', title: 'Strategy', desc: 'Prioritised roadmap with clear business cases, ownership, and timelines.' },
-              { step: '03', title: 'Execution', desc: 'Agile delivery with embedded quality gates, security reviews, and stakeholder cadences.' },
-              { step: '04', title: 'Optimise', desc: 'Performance tuning, knowledge transfer, and ongoing advisory to sustain results.' },
-            ].map((phase, i) => (
-              <motion.div
-                key={phase.step}
-                {...fadeUp(i * 0.1)}
-                className="relative text-center p-8 rounded-2xl bg-white border border-slate-200 hover:border-blue-200 hover:shadow-lg transition-all duration-300"
-              >
-                <div className="w-12 h-12 rounded-xl bg-blue-600 text-white text-xl font-bold flex items-center justify-center mx-auto mb-4">
-                  {phase.step}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {techStack.map((group, i) => (
+              <FadeIn key={group.category} delay={i * 0.08}>
+                <div className="p-6 rounded-xl border border-slate-200 dark:border-slate-800/60 bg-white dark:bg-slate-900/20">
+                  <p className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-4">{group.category}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <span
+                        key={item}
+                        className="px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700/60 rounded-lg bg-slate-50 dark:bg-slate-800/40"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-slate-900 mb-2">{phase.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{phase.desc}</p>
-                {i < 3 && (
-                  <ArrowRight className="hidden md:block absolute top-1/2 -right-4 -translate-y-1/2 w-6 h-6 text-slate-300 z-10" />
-                )}
-              </motion.div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 bg-slate-950 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-blue-600/12 rounded-full blur-[100px]" />
-        </div>
-        <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.div {...fadeUp()} className="space-y-6">
-            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
-              Ready to accelerate transformation?
+      {/* ======== CTA ======== */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-transparent to-indigo-50 dark:from-blue-600/8 dark:via-transparent dark:to-indigo-600/8" />
+        <div className="absolute inset-0 bg-white/80 dark:bg-[#0a0a0f]/80" />
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <FadeIn>
+            <h2 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white mb-6">
+              Need a Custom
+              <span className="text-gradient"> Engineering Solution</span>?
             </h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              Partner with Trucept Consulting to implement secure, efficient, and data-driven paper operations.
+            <p className="text-lg text-slate-600 dark:text-slate-400 mb-10 max-w-xl mx-auto">
+              {"Tell us about your technical challenge. We'll scope the project, recommend the right approach, and deliver production-ready results."}
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-500 transition-colors shadow-xl shadow-blue-600/25"
+              className="group inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-500 transition-all duration-300 shadow-2xl shadow-blue-600/25"
             >
-              Contact Us <ArrowRight className="w-4 h-4" />
+              Discuss Your Project
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-          </motion.div>
+          </FadeIn>
         </div>
       </section>
     </Layout>
